@@ -1,6 +1,7 @@
 Untitled_Explorer_Game - space ship
 
 Requirements
+
 ➢ Movement system: forward, backward, turn left/right. Strife
 left/right, jump, crouch.
 ➢ World story: Interacting with the environment reveals more of the
