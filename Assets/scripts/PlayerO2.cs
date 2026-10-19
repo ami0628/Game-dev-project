@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+// add script to Player GameObject
+// for player specfic data of oxygen mechanic
+// detects if user is on the ship - to carry out expected oxygen behaviour
 public class PlayerO2 : MonoBehaviour
 {
     private Vector3 playerSpawnpoint;
@@ -11,18 +14,18 @@ public class PlayerO2 : MonoBehaviour
     public GameObject O2Tank;
     public TextMeshProUGUI deathMessage;
 
-    // Start is called before the first frame update
     void Start()
     {
+        // initialise
         playerSpawnpoint = new Vector3(0,5,0);
         onShip = true;
         oxygenEquipped = false;
 
     }
 
-    // Update is called once per frame
     void Update()
     {
+        // player killed if outside without an O2 tank
         if (!onShip && !oxygenEquipped)
         {
             StartCoroutine(Dead());
@@ -33,7 +36,7 @@ public class PlayerO2 : MonoBehaviour
     {
         if (other.gameObject.tag == "Ship") 
         {
-            onShip = true;
+            onShip = true; 
         }
 
     }
@@ -48,12 +51,15 @@ public class PlayerO2 : MonoBehaviour
 
     }
 
+    // player death and respawn
     IEnumerator Dead() 
     {
+        // player death
         GetComponent<Renderer>().enabled = false;
         transform.position = playerSpawnpoint;
         deathMessage.text = "You ran out of oyxgen";
 
+        // player respawn
         yield return new WaitForSeconds(5);
         GetComponent<Renderer>().enabled = true;
         deathMessage.text = "";
