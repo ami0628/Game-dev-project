@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Ground
   - Ship
+  - Outside
+  - O2
+  - O2Text
   layers:
   - Default
   - TransparentFX
