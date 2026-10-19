@@ -57,7 +57,7 @@ public class PlayerO2 : MonoBehaviour
         // player death
         GetComponent<Renderer>().enabled = false;
         transform.position = playerSpawnpoint;
-        deathMessage.text = "You ran out of oyxgen";
+        deathMessage.text = "You ran out of oxygen";
 
         // player respawn
         yield return new WaitForSeconds(5);
