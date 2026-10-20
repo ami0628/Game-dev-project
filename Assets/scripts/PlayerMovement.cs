@@ -12,13 +12,16 @@ public class PlayerMovement : MonoBehaviour
     private float horizontalInput;
     private float forwardInput;
 
-    public bool isOnGround = true;
     public float jumpForce = 5.0f;
+    public float gravity = -9.8f;
+
     private Rigidbody playerRB;
 
-    public float strafeForce = 30.0f;
+    public float strafeForce = 50.0f;
+    public float strafeDecay = 5.0f;
 
     private Vector3 originalScale;
+    private Vector3 playerVelocity;
 
     // Start is called before the first frame update
     void Start()
@@ -35,21 +38,20 @@ public class PlayerMovement : MonoBehaviour
         horizontalInput = Input.GetAxis("Horizontal");
         forwardInput = Input.GetAxis("Vertical");
 
+        // movement vector (transform.right + transform.forward get unit vector relative to where player is facing)
+        Vector3 move = (transform.right * horizontalInput + transform.forward * forwardInput);
 
-
-        //// move the player without going through walls!!!
-        Vector3 move = new Vector3(horizontalInput, 0, forwardInput);
-        controller.Move(move * speed * Time.deltaTime);
-
-
+        // movement from WASD input + external (strafing etc...)
+        Vector3 totalMovement = (move * speed) + playerVelocity;
 
 
         //Jump
-        if (Input.GetKeyDown(KeyCode.Space) && isOnGround)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            playerRB.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            isOnGround = false;
+            playerVelocity.y = Mathf.Sqrt(jumpForce * -2f * gravity);
         }
+
+        playerVelocity.y += (gravity * Time.deltaTime);
 
 
         //Strafe
@@ -57,14 +59,18 @@ public class PlayerMovement : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
             {
-                playerRB.AddForce(Vector3.right * strafeForce * -1, ForceMode.Impulse);
+                playerVelocity += (transform.right * strafeForce * -1);
             }
 
             if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
             {
-                playerRB.AddForce(Vector3.right * strafeForce * 1, ForceMode.Impulse);
+                playerVelocity += (transform.right * strafeForce * 1);
             }
         }
+        // decay strafe momentume
+        //lerp (linear interpolation) gets value between current velocity and 0, amplified by the time/ strafe decay
+        playerVelocity.x = Mathf.Lerp(playerVelocity.x, 0, strafeDecay * Time.deltaTime);
+        playerVelocity.z = Mathf.Lerp(playerVelocity.z, 0, strafeDecay * Time.deltaTime);
 
         //Crouch
         if (Input.GetKeyDown(KeyCode.LeftControl))
@@ -78,13 +84,9 @@ public class PlayerMovement : MonoBehaviour
             transform.position += transform.up * originalScale.y * 0.25f;
         }
 
+
+        controller.Move(totalMovement * Time.deltaTime);
+
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isOnGround = true;
-        }
-    }
 }
