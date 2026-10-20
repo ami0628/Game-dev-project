@@ -3,7 +3,13 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Ground
+  - Ship
+  - Outside
+  - O2
+  - O2Text
+  - Resource
   layers:
   - Default
   - TransparentFX
