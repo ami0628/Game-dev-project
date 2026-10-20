@@ -12,8 +12,8 @@ public class PlayerMovement : MonoBehaviour
     private float horizontalInput;
     private float forwardInput;
 
-    public float jumpForce = 5.0f;
-    public float gravity = -9.8f;
+    public float jumpForce = 6.0f;
+    public float gravity = -40f;
 
     private Rigidbody playerRB;
 
@@ -46,7 +46,7 @@ public class PlayerMovement : MonoBehaviour
 
 
         //Jump
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && controller.isGrounded)
         {
             playerVelocity.y = Mathf.Sqrt(jumpForce * -2f * gravity);
         }
