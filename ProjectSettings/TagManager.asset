@@ -9,6 +9,7 @@ TagManager:
   - Outside
   - O2
   - O2Text
+  - Resource
   layers:
   - Default
   - TransparentFX
