@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
 
 public class PlayerMovement : MonoBehaviour
 {
+
+    private CharacterController controller;
 
     public float speed = 5.0f;
     private float horizontalInput;
@@ -22,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     {
         playerRB = GetComponent<Rigidbody>();
         originalScale = transform.localScale;
+        controller = GetComponent<CharacterController>();
     }
 
     // Update is called once per frame
@@ -32,9 +36,12 @@ public class PlayerMovement : MonoBehaviour
         forwardInput = Input.GetAxis("Vertical");
 
 
-        // Move the player forward
-        transform.Translate(Vector3.forward * Time.deltaTime * speed * forwardInput);
-        transform.Translate(Vector3.right * Time.deltaTime * speed * horizontalInput);
+
+        //// move the player without going through walls!!!
+        Vector3 move = new Vector3(horizontalInput, 0, forwardInput);
+        controller.Move(move * speed * Time.deltaTime);
+
+
 
 
         //Jump
@@ -62,12 +69,12 @@ public class PlayerMovement : MonoBehaviour
         //Crouch
         if (Input.GetKeyDown(KeyCode.LeftControl))
         {
-            transform.localScale = new Vector3(1f, 0.5f, 1f);
+            transform.localScale = new Vector3(originalScale.x, (originalScale.y/2), originalScale.z);
             transform.position -= transform.up * originalScale.y * 0.25f;
         }
         if (Input.GetKeyUp(KeyCode.LeftControl))
         {
-            transform.localScale = new Vector3(1f, 1f, 1f);
+            transform.localScale = new Vector3(originalScale.x, originalScale.y, originalScale.z);
             transform.position += transform.up * originalScale.y * 0.25f;
         }
 
