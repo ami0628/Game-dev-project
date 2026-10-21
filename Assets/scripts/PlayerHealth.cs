@@ -27,7 +27,6 @@ public class PlayerHealth : MonoBehaviour
         }
 
         healthBar.SetMaxHealth(maxHealth);
-        healthBar.SetHealth(Health, maxHealth);
     }
 
     private void Update()
