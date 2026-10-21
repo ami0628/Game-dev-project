@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
 
     public float jumpForce = 6.0f;
     public float gravity = -40f;
+    private float groundedGravity = -2f;
 
 
     public float strafeForce = 100f;
@@ -60,9 +61,11 @@ public class PlayerMovement : MonoBehaviour
         cameraPitch -= (mouseYInput * mouseSensitivity);
         cameraPitch = Mathf.Clamp(cameraPitch, -90f, 90f);
         playerCamera.localEulerAngles = new Vector3(cameraPitch, 0f, 0f);
-        
+
 
         //Jump
+        if (controller.isGrounded && playerVelocity.y < 0) { playerVelocity.y = groundedGravity; }
+
         if (Input.GetKeyDown(KeyCode.Space) && controller.isGrounded)
         {
             playerVelocity.y = Mathf.Sqrt(jumpForce * -2f * gravity);
