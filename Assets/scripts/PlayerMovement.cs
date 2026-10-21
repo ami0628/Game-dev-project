@@ -20,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
 
     public float strafeForce = 100f;
     public float strafeDecay = 5.0f;
+    private float strafeTimer = 0f;
 
     private Vector3 originalScale;
     private Vector3 playerVelocity;
@@ -71,23 +72,29 @@ public class PlayerMovement : MonoBehaviour
 
 
         //Strafe
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (strafeTimer > 0f) { strafeTimer -= Time.deltaTime; }
+        else
         {
-            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+            if (Input.GetKeyDown(KeyCode.LeftShift))
             {
-                playerVelocity += (transform.right * strafeForce * -1);
-            }
+                if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+                {
+                    playerVelocity += (transform.right * strafeForce * -1);
+                }
 
-            if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-            {
-                playerVelocity += (transform.right * strafeForce * 1);
-            }
+                if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+                {
+                    playerVelocity += (transform.right * strafeForce * 1);
+                }
 
-            if (!(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) && !(Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)))
-            {
-                playerVelocity += (transform.forward * strafeForce * 1);
+                if (!(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) && !(Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)))
+                {
+                    playerVelocity += (transform.forward * strafeForce * 1);
+                }
+                strafeTimer = 1f;
             }
         }
+
         // decay strafe momentume
         //lerp (linear interpolation) gets value between current velocity and 0, amplified by the time/ strafe decay
         playerVelocity.x = Mathf.Lerp(playerVelocity.x, 0, strafeDecay * Time.deltaTime);
