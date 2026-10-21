@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem.XR;
 
@@ -7,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
 {
 
     private CharacterController controller;
+    public Transform playerCamera;
 
     public float speed = 5.0f;
     private float horizontalInput;
@@ -15,20 +17,26 @@ public class PlayerMovement : MonoBehaviour
     public float jumpForce = 6.0f;
     public float gravity = -40f;
 
-    private Rigidbody playerRB;
 
-    public float strafeForce = 50.0f;
+    public float strafeForce = 100f;
     public float strafeDecay = 5.0f;
 
     private Vector3 originalScale;
     private Vector3 playerVelocity;
 
+    private float mouseXInput;
+    private float mouseYInput;
+    private float cameraPitch = 0.0f;  
+    public float mouseSensitivity = 10f;
+
+
     // Start is called before the first frame update
     void Start()
     {
-        playerRB = GetComponent<Rigidbody>();
         originalScale = transform.localScale;
         controller = GetComponent<CharacterController>();
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     // Update is called once per frame
@@ -37,6 +45,8 @@ public class PlayerMovement : MonoBehaviour
         //get player input
         horizontalInput = Input.GetAxis("Horizontal");
         forwardInput = Input.GetAxis("Vertical");
+        mouseXInput = Input.GetAxis("Mouse X");
+        mouseYInput = Input.GetAxis("Mouse Y");
 
         // movement vector (transform.right + transform.forward get unit vector relative to where player is facing)
         Vector3 move = (transform.right * horizontalInput + transform.forward * forwardInput);
@@ -44,6 +54,12 @@ public class PlayerMovement : MonoBehaviour
         // movement from WASD input + external (strafing etc...)
         Vector3 totalMovement = (move * speed) + playerVelocity;
 
+        // mouse movement turns player / camera
+        transform.Rotate(Vector3.up * mouseXInput * mouseSensitivity);
+        cameraPitch -= (mouseYInput * mouseSensitivity);
+        cameraPitch = Mathf.Clamp(cameraPitch, -90f, 90f);
+        playerCamera.localEulerAngles = new Vector3(cameraPitch, 0f, 0f);
+        
 
         //Jump
         if (Input.GetKeyDown(KeyCode.Space) && controller.isGrounded)
@@ -65,6 +81,11 @@ public class PlayerMovement : MonoBehaviour
             if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
             {
                 playerVelocity += (transform.right * strafeForce * 1);
+            }
+
+            if (!(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) && !(Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)))
+            {
+                playerVelocity += (transform.forward * strafeForce * 1);
             }
         }
         // decay strafe momentume
