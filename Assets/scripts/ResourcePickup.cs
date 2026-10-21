@@ -3,21 +3,27 @@ using UnityEngine;
 
 public class ResourcePickup : MonoBehaviour
 {
-    public Color Colour = Color.red;
-    public Renderer panelRenderer;
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("Something entered the resource: " + other.name);
+
         if (other.CompareTag("Player"))
         {
-            ResourceManager manager =
-                FindObjectOfType<ResourceManager>();
+            Debug.Log("Player detected!");
 
-            if (manager != null)
+            ResourceCollector collector =
+                other.GetComponent<ResourceCollector>();
+
+            if (collector != null)
             {
-                panelRenderer = GetComponent<Renderer>();
-                panelRenderer.material.color = Colour;
-                manager.AddResource();
+                collector.CollectResource();
                 Destroy(gameObject);
+            }
+            else
+            {
+                Debug.LogError(
+                    "ResourceCollector not found on the Player!"
+                );
             }
         }
     }

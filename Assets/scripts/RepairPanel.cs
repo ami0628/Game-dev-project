@@ -4,98 +4,105 @@ using TMPro;
 
 public class RepairPanel : MonoBehaviour
 {
-    public int repairCost = 3;
-
+    public ResourceCollector playerResources;
     public Renderer panelRenderer;
-    public TextMeshProUGUI messageText;
+    public TextMeshProUGUI interactionText;
+    public GameObject winPanel;
 
-    public GameObject winScreen;
+    public Color brokenColor = Color.red;
+    public Color repairedColor = Color.green;
 
-    private ResourceManager resourceManager;
-    private bool playerNearby;
-    private bool repaired;
-
-    public Color brokenColour = Color.red;
-    public Color repairedColour = Color.green;
+    private bool playerNearby = false;
+    private bool isRepaired = false;
 
     void Start()
     {
-        resourceManager = FindObjectOfType<ResourceManager>();
-
-        if (panelRenderer == null)
+        if (panelRenderer != null)
         {
-            panelRenderer = GetComponent<Renderer>();
+            panelRenderer.material.color = brokenColor;
+        }
+        else
+        {
+            Debug.LogError("RepairPanel: Panel Renderer is not assigned!");
         }
 
-        panelRenderer.material.color = brokenColour;
-
-        if (messageText != null)
+        if (playerResources == null)
         {
-            messageText.text = "Panel broken";
+            Debug.LogError("RepairPanel: Player Resources is not assigned!");
         }
 
-        if (winScreen != null)
-        {
-            winScreen.SetActive(false);
-        }
+        if (winPanel != null)
+            winPanel.SetActive(false);
+
+        if (interactionText != null)
+            interactionText.text = "";
+
+        Debug.Log("RepairPanel script started.");
     }
 
     void Update()
     {
-        if (!playerNearby || repaired)
-        {
+        if (!playerNearby || isRepaired)
             return;
-        }
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            TryRepair();
+            Debug.Log("E key pressed near repair panel.");
+            Repair();
         }
     }
 
-    void TryRepair()
+    void Repair()
+        
     {
-        if (resourceManager == null)
+        if (playerResources == null)
         {
+            Debug.LogError(
+                "RepairPanel: Player Resources is not assigned!"
+            );
             return;
         }
 
-        if (resourceManager.UseResource(repairCost))
+        if (!playerResources.UseResource())
         {
-            repaired = true;
-            panelRenderer.material.color = repairedColour;
+            if (interactionText != null)
+                interactionText.text =
+                    "You need a resource to repair the ship!";
 
-            if (messageText != null)
-            {
-                messageText.text = "PANEL REPAIRED!";
-            }
-
-            if (winScreen != null)
-            {
-                winScreen.SetActive(true);
-            }
+            Debug.Log("Repair failed: no resources.");
+            return;
         }
+
+        isRepaired = true;
+
+        if (panelRenderer != null)
+            panelRenderer.material.color = repairedColor;
         else
-        {
-            if (messageText != null)
-            {
-                messageText.text =
-                    "Not enough resources! Need " + repairCost;
-            }
-        }
+            Debug.LogWarning("Panel Renderer is not assigned.");
+
+        if (interactionText != null)
+            interactionText.text = "Ship repaired!";
+
+        if (winPanel != null)
+            winPanel.SetActive(true);
+        else
+            Debug.LogWarning("Win Panel is not assigned.");
+
+        Debug.Log("SUCCESS: Ship repaired!");
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("Repair zone entered by: " + other.name);
+
         if (other.CompareTag("Player"))
         {
             playerNearby = true;
+            Debug.Log("Player is near the repair panel.");
 
-            if (!repaired && messageText != null)
-            {
-                messageText.text =
-                    "Press E to repair (" + repairCost + " resources)";
-            }
+            if (interactionText != null && !isRepaired)
+                interactionText.text =
+                    "Press E to repair the ship";
         }
     }
 
@@ -105,10 +112,10 @@ public class RepairPanel : MonoBehaviour
         {
             playerNearby = false;
 
-            if (!repaired && messageText != null)
-            {
-                messageText.text = "Panel broken";
-            }
+            if (interactionText != null && !isRepaired)
+                interactionText.text = "";
+
+            Debug.Log("Player left the repair zone.");
         }
     }
 }
