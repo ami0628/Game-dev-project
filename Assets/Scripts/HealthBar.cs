@@ -30,6 +30,7 @@ public class HealthBar : MonoBehaviour
             return;
         }
 
+        // changes UI health bar accordingly
         float healthPercent = Mathf.Clamp01(health / maxHealth);
 
         healthBar.sizeDelta = new Vector2(

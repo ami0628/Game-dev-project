@@ -7,15 +7,15 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private float maxHealth = 100f;
     [SerializeField] private HealthBar healthBar;
 
-    [Header("Testing")]
-    [SerializeField] private bool enableTestKeys = true;
+    private PlayerO2 playerScript;
 
-    public float Health { get; private set; }
+    public float health { get; private set; }
     public float MaxHealth => maxHealth;
 
     private void Start()
     {
-        Health = maxHealth;
+        playerScript = GetComponent<PlayerO2>();
+        health = maxHealth;
 
         if (healthBar == null)
         {
@@ -31,31 +31,29 @@ public class PlayerHealth : MonoBehaviour
 
     private void Update()
     {
-        // Currently uses F and H to increase/ decreease respectively
-        if (!enableTestKeys)
-            return;
+        // player death 
+        if (health < 1) 
+        {
+            // reset health for respawn
+            health = maxHealth;
+            healthBar.SetMaxHealth(maxHealth);
 
-        if (Input.GetKeyDown(KeyCode.F))
-            ChangeHealth(-20f);
+            // set true so playerScript runs death method
+            playerScript.wasKilled = true;
 
-        if (Input.GetKeyDown(KeyCode.H))
-            ChangeHealth(20f);
+        }
+
     }
 
-    // Changes the health bars 
-    public void ChangeHealth(float amount)
+
+    private void OnTriggerEnter(Collider other)
     {
-        Health = Mathf.Clamp(Health + amount, 0f, maxHealth);
-
-        if (healthBar != null)
-            healthBar.SetHealth(Health, maxHealth);
-
-        Debug.Log($"Player health: {Health}/{maxHealth}");
-
-        if (Health <= 0f)
+        // deal damage to player when hit by enemy
+        if (other.gameObject == GameObject.FindGameObjectWithTag("Enemy")) 
         {
-            Debug.Log("Game Over! The player's health has reached zero.");
-            // connect Game Over screen here
+            health -= 20f;
+            healthBar.SetHealth(health, maxHealth);
+
         }
     }
 }
