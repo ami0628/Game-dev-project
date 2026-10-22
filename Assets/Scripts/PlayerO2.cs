@@ -2,10 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEditor;
 
 // add script to Player GameObject
-// for player specfic data of oxygen mechanic
 // detects if user is on the ship - to carry out expected oxygen behaviour
 public class PlayerO2 : MonoBehaviour
 {
@@ -23,7 +21,7 @@ public class PlayerO2 : MonoBehaviour
 
     void Start()
     {
-        // initialise
+        // initialise default
         onShip = true;
         oxygenEquipped = false;
 
@@ -64,14 +62,14 @@ public class PlayerO2 : MonoBehaviour
     IEnumerator Dead() 
     {
 
-        // grab component to temporarily disable
+        // grab component to temporarily disable to allow teleportation
         CharacterController cc = GetComponent<CharacterController>();
 
-        cc.enabled = false; // disable to allow teleportation
+        cc.enabled = false; 
         transform.position = Spawnpoint.transform.position; // teleport to spawn
-        cc.enabled = true;
+        cc.enabled = true; // re-enable for correct movement 
 
-        // display message
+        // display death message
         deathMessage.text = "You ran out of oxygen";
         yield return new WaitForSeconds(5);
         deathMessage.text = "";

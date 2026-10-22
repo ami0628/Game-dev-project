@@ -1,4 +1,4 @@
-
+// Render repair panel + its mechanics
 using UnityEngine;
 using TMPro;
 
@@ -19,6 +19,7 @@ public class RepairPanel : MonoBehaviour
     {
         if (panelRenderer != null)
         {
+            //Begins w red colour
             panelRenderer.material.color = brokenColor;
         }
         else
@@ -42,6 +43,7 @@ public class RepairPanel : MonoBehaviour
 
     void Update()
     {
+        // interaction prompt
         if (!playerNearby || isRepaired)
             return;
 
@@ -63,6 +65,7 @@ public class RepairPanel : MonoBehaviour
             return;
         }
 
+        //Must have resources to repair 
         if (!playerResources.UseResource())
         {
             if (interactionText != null)
@@ -72,6 +75,8 @@ public class RepairPanel : MonoBehaviour
             Debug.Log("Repair failed: no resources.");
             return;
         }
+
+        //debugging for console + interaction text for win game
 
         isRepaired = true;
 

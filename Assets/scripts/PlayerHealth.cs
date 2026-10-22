@@ -1,4 +1,4 @@
-
+// Assigns the healthbar to player so it works in accordance to their life. 
 using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
@@ -31,6 +31,7 @@ public class PlayerHealth : MonoBehaviour
 
     private void Update()
     {
+        // Currently uses F and H to increase/ decreease respectively
         if (!enableTestKeys)
             return;
 
@@ -41,6 +42,7 @@ public class PlayerHealth : MonoBehaviour
             ChangeHealth(20f);
     }
 
+    // Changes the health bars 
     public void ChangeHealth(float amount)
     {
         Health = Mathf.Clamp(Health + amount, 0f, maxHealth);
@@ -53,7 +55,7 @@ public class PlayerHealth : MonoBehaviour
         if (Health <= 0f)
         {
             Debug.Log("Game Over! The player's health has reached zero.");
-            // You can connect your Game Over screen here later.
+            // connect Game Over screen here
         }
     }
 }

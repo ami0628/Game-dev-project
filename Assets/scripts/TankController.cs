@@ -25,7 +25,7 @@ public class TankController : MonoBehaviour
 
     void Start()
     {
-       
+
         // must get components in script since script is assigned to prefab
         player = GameObject.FindGameObjectWithTag("Player");
         oxygenBar = GameObject.FindGameObjectWithTag("Oxygen Bar");
