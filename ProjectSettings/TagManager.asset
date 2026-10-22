@@ -5,6 +5,12 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
+  - Ship
+  - Outside
+  - O2
+  - O2Text
+  - Resource
+  - Oxygen Bar
   layers:
   - Default
   - TransparentFX

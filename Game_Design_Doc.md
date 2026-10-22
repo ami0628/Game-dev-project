@@ -1,62 +1,79 @@
-Untitled_Explorer_Game - space ship
+# Untitled Explorer Game
 
-Requirement features:
+*Game Design Document · Setting: a space ship*
 
-➢ Movement system: forward, backward, turn left/right. Strife
-left/right, jump, crouch.
+---
 
-➢ World story: Interacting with the environment reveals more of the
-story progressively. Different story endings depending on the
-amount of information collected, or branching narrative depending
-on player choices.
+## 1. Required Features
 
-➢ Environment 1: inside the ship. Various locations where the player
-can repair ship systems through puzzles requiring resources. When
-all are fixed, player wins. Story tells them of return to Earth.
+### Movement System
 
-➢ Environment 2: the outside world. Several locations where the
-player can collect resources. Creatures roam around, some
-aggressive towards the player (health + damage system).
+Forward, backward, turn left/right, strafe left/right, jump, crouch.
 
-➢ Procedural generation of creature properties and/or spawn
-locations. The player can take pictures of the creatures, saved in an
-album with a short description. This is the log with which the player
-returns to Earth.
+### World Story
 
-➢ Limited supply of oxygen (time-bound gameplay). When this runs
-out, the player loses. There may be oxygen tanks around the ship
-which extend the game time if collected.
+Interacting with the environment reveals more of the story progressively. Endings vary with the amount of information collected, or the narrative branches depending on player choices.
 
-➢ User Interface: Game start menu. Game end menu. Pause menu.
-Settings menu (adjust audio, mouse sensitivity, key bindings).
+### Environment 1: Inside the Ship
 
-➢ HUD: display player health, inventory, controls.
+Various locations where the player can repair ship systems through puzzles that require resources. When all systems are fixed, the player wins, and the story tells of their return to Earth.
 
-➢ Other: Post-processing effects. Checkpoints. Cutscene introduction
-for each environment, ending. Background atmospheric music,
-sound effects of player movements, creatures, environment
-interactions. 3D models, animations and particle effects for player
-character, creatures, environmental objects.
+### Environment 2: The Outside World
 
+Several locations where the player can collect resources. Creatures roam around, and some are aggressive towards the player (health + damage system).
 
-Additional features:
+### Procedural Generation and Photography
 
+Creature properties and/or spawn locations are procedurally generated. The player can take pictures of the creatures, which are saved in an album with a short description. This album is the log the player returns to Earth with.
 
+### Oxygen (Time-Bound Gameplay)
 
-Core features:
+The player has a limited oxygen supply, and loses when it runs out. Oxygen tanks placed around the ship extend the game time if collected.
 
-Movement:
-Walking + jumping + crouching + strafing
+### User Interface
 
-Environment:
-Ship environment + outside - Ship repairs
+- Game start menu
+- Game end menu
+- Pause menu
+- Settings menu: audio, mouse sensitivity, key bindings
 
-Characters:
-Damage system (oxygen/enemies) - health bar
-NPCs
-HUD
+### HUD
 
-UI:
-Damage system (oxygen/enemies) - health bar
-HUD
+Displays player health, inventory and controls.
 
+### Other
+
+- Post-processing effects
+- Checkpoints
+- Cutscene introduction for each environment, and for the ending
+- Background atmospheric music, plus sound effects for player movement, creatures and environment interactions
+- 3D models, animations and particle effects for the player character, creatures and environmental objects
+
+---
+
+## 2. Additional Features
+
+*None listed yet.*
+
+---
+
+## 3. Core Features
+
+### Movement
+
+Walking, jumping, crouching and strafing.
+
+### Environment
+
+Ship environment and outside world, with ship repairs.
+
+### Characters
+
+- Damage system (oxygen / enemies) with health bar
+- NPCs
+- HUD
+
+### UI
+
+- Damage system (oxygen / enemies) with health bar
+- HUD
