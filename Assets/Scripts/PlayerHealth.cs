@@ -1,4 +1,5 @@
 // Assigns the healthbar to player so it works in accordance to their life. 
+using System.Linq;
 using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
@@ -49,7 +50,7 @@ public class PlayerHealth : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // deal damage to player when hit by enemy
-        if (other.gameObject == GameObject.FindGameObjectWithTag("Enemy")) 
+        if (GameObject.FindGameObjectsWithTag("Enemy").Contains(other.gameObject)) 
         {
             health -= 20f;
             healthBar.SetHealth(health, maxHealth);
