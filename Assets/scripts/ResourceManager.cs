@@ -1,4 +1,4 @@
-
+// Vague resource count - NOT USING - not attached to player - using resourceCollector
 using UnityEngine;
 using TMPro;
 

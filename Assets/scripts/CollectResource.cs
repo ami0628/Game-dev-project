@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// Destroy the resources upon collision - removed from screens
 public class DestroyOnContact : MonoBehaviour
 {
     void OnTriggerEnter(Collider other)

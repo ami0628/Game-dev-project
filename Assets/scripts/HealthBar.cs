@@ -1,4 +1,4 @@
-
+// Renders the health bar w specifc height and widths
 using UnityEngine;
 
 public class HealthBar : MonoBehaviour
