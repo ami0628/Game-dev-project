@@ -1,14 +1,16 @@
-// Render repair panel + its mechanics
+// Repair panel mechanics
 using UnityEngine;
 using TMPro;
 
 public class RepairPanel : MonoBehaviour
 {
+    // Needs to keep track of resources + interactions
     public ResourceCollector playerResources;
     public Renderer panelRenderer;
     public TextMeshProUGUI interactionText;
     public GameObject winPanel;
 
+    public int resourcesRequired = 3;
     public Color brokenColor = Color.red;
     public Color repairedColor = Color.green;
 
@@ -17,33 +19,23 @@ public class RepairPanel : MonoBehaviour
 
     void Start()
     {
+        // initial start up + unity debugging
         if (panelRenderer != null)
-        {
-            //Begins w red colour
             panelRenderer.material.color = brokenColor;
-        }
         else
-        {
             Debug.LogError("RepairPanel: Panel Renderer is not assigned!");
-        }
 
         if (playerResources == null)
-        {
             Debug.LogError("RepairPanel: Player Resources is not assigned!");
-        }
 
         if (winPanel != null)
             winPanel.SetActive(false);
 
-        if (interactionText != null)
-            interactionText.text = "";
-
-        Debug.Log("RepairPanel script started.");
+        SetMessage("");
     }
 
     void Update()
     {
-        // interaction prompt
         if (!playerNearby || isRepaired)
             return;
 
