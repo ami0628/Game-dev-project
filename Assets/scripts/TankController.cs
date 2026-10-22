@@ -1,10 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Numerics;
-using TMPro;
 using UnityEngine;
 
+// added to O2 Tank prefab
 public class TankController : MonoBehaviour
 {
     // components to control O2 UI
@@ -15,24 +14,27 @@ public class TankController : MonoBehaviour
     public int currentCapacity;
     public int totalCapacity;
 
-    // player references
+    // player object references
     public GameObject player;
     private PlayerO2 playerScript;
     private bool onPlayer;
 
+    // timer to accurately decrement oxygen each second
     private float timer;
 
 
     void Start()
     {
-        // setting GameObjects and scripts
+       
+        // must get components in script since script is assigned to prefab
         player = GameObject.FindGameObjectWithTag("Player");
         oxygenBar = GameObject.FindGameObjectWithTag("Oxygen Bar");
         playerScript = player.GetComponent<PlayerO2>();
         oxygenScript = oxygenBar.GetComponent<HealthBar>();
 
 
-        // setting tank capacities 
+        // setting default tank capacities 
+        // capacity represents seconds of usage
         totalCapacity = 30;
         currentCapacity = 30;
 
@@ -49,7 +51,7 @@ public class TankController : MonoBehaviour
         if (onPlayer && !playerScript.onShip) 
         {
             // destroy tank if oxygen runs out
-            // sets equipped to false so method to kill player is run in playerScript
+            // sets equipped to false so method to kill + respawn the player is run in playerScript
             if (currentCapacity == 0)
             {
         
@@ -76,8 +78,8 @@ public class TankController : MonoBehaviour
     {
         if (other.gameObject.tag == "Player") 
         {
-            // if player already holds an O2 tank
-            // destroy it to pick up new O2 tank
+            // if player already holds an O2 tank, destroy it to pick up new O2 tank
+            // to remove old tank from the scene
             if (playerScript.O2Tank) 
             {
                 Destroy(playerScript.O2Tank);
@@ -88,7 +90,7 @@ public class TankController : MonoBehaviour
             currentCapacity = totalCapacity;
             oxygenScript.SetMaxHealth(totalCapacity);
 
-            // hide O2 tank after pick up to keep script running
+            // (instead of destroying) hide O2 tank after pick up to keep script running
             gameObject.transform.position = new UnityEngine.Vector3(0, -10, 0);
             playerScript.O2Tank = gameObject;
 
