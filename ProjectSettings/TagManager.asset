@@ -10,6 +10,7 @@ TagManager:
   - O2
   - O2Text
   - Resource
+  - Oxygen Bar
   layers:
   - Default
   - TransparentFX

@@ -4,22 +4,28 @@ using UnityEngine;
 using TMPro;
 
 // add script to Player GameObject
-// for player specfic data of oxygen mechanic
 // detects if user is on the ship - to carry out expected oxygen behaviour
 public class PlayerO2 : MonoBehaviour
 {
-    private Vector3 playerSpawnpoint;
+    // flags
     public bool onShip;
     public bool oxygenEquipped;
-    public GameObject O2Tank;
+
+    public GameObject O2Tank; // current tank equipped (initially null)
+    public GameObject Spawnpoint;
+
+    // text components
     public TextMeshProUGUI deathMessage;
+    public TextMeshProUGUI O2StarterMessage;
+    public TextMeshProUGUI O2hint;
 
     void Start()
     {
-        // initialise
-        playerSpawnpoint = new Vector3(0,5,0);
+        // initialise default
         onShip = true;
         oxygenEquipped = false;
+
+        StartCoroutine(StartMessage());
 
     }
 
@@ -32,6 +38,7 @@ public class PlayerO2 : MonoBehaviour
         }
     }
 
+    // set current location
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Ship") 
@@ -54,14 +61,31 @@ public class PlayerO2 : MonoBehaviour
     // player death and respawn
     IEnumerator Dead() 
     {
-        // player death
-        GetComponent<Renderer>().enabled = false;
-        transform.position = playerSpawnpoint;
-        deathMessage.text = "You ran out of oxygen";
 
-        // player respawn
+        // grab component to temporarily disable to allow teleportation
+        CharacterController cc = GetComponent<CharacterController>();
+
+        cc.enabled = false; 
+        transform.position = Spawnpoint.transform.position; // teleport to spawn
+        cc.enabled = true; // re-enable for correct movement 
+
+        // display death message
+        deathMessage.text = "You ran out of oxygen";
         yield return new WaitForSeconds(5);
-        GetComponent<Renderer>().enabled = true;
         deathMessage.text = "";
+
+        
+    }
+
+    // display starter texts for 5 seconds each 
+    IEnumerator StartMessage() 
+    {
+        O2StarterMessage.enabled = true;
+        yield return new WaitForSeconds(5);
+        O2StarterMessage.enabled = false;
+
+        O2hint.enabled = true;
+        yield return new WaitForSeconds(5);
+        O2hint.enabled = false;
     }
 }
