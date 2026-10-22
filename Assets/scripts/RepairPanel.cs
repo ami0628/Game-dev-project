@@ -44,7 +44,7 @@ public class RepairPanel : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E))
             Repair();
-        }
+    }
 
     void RefreshPrompt()
     {
