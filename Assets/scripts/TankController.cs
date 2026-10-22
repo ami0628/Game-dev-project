@@ -31,6 +31,7 @@ public class TankController : MonoBehaviour
         playerScript = player.GetComponent<PlayerO2>();
         oxygenScript = oxygenBar.GetComponent<HealthBar>();
 
+
         // setting tank capacities 
         totalCapacity = 30;
         currentCapacity = 30;
@@ -39,7 +40,7 @@ public class TankController : MonoBehaviour
         oxygenScript.SetMaxHealth(totalCapacity);
         oxygenScript.SetHealth(0, totalCapacity);
 
-        timer = 0; 
+        timer = 0;
 
     }
 
@@ -92,6 +93,7 @@ public class TankController : MonoBehaviour
             playerScript.O2Tank = gameObject;
 
         }
+
     }
 
 }

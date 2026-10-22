@@ -9,19 +9,25 @@ using UnityEditor;
 // detects if user is on the ship - to carry out expected oxygen behaviour
 public class PlayerO2 : MonoBehaviour
 {
+    // flags
     public bool onShip;
     public bool oxygenEquipped;
 
-    public GameObject O2Tank;
+    public GameObject O2Tank; // current tank equipped (initially null)
     public GameObject Spawnpoint;
 
+    // text components
     public TextMeshProUGUI deathMessage;
+    public TextMeshProUGUI O2StarterMessage;
+    public TextMeshProUGUI O2hint;
 
     void Start()
     {
         // initialise
         onShip = true;
         oxygenEquipped = false;
+
+        StartCoroutine(StartMessage());
 
     }
 
@@ -34,6 +40,7 @@ public class PlayerO2 : MonoBehaviour
         }
     }
 
+    // set current location
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Ship") 
@@ -70,5 +77,17 @@ public class PlayerO2 : MonoBehaviour
         deathMessage.text = "";
 
         
+    }
+
+    // display starter texts for 5 seconds each 
+    IEnumerator StartMessage() 
+    {
+        O2StarterMessage.enabled = true;
+        yield return new WaitForSeconds(5);
+        O2StarterMessage.enabled = false;
+
+        O2hint.enabled = true;
+        yield return new WaitForSeconds(5);
+        O2hint.enabled = false;
     }
 }
