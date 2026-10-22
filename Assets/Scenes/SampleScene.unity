@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.17687279, g: 0.21449211, b: 0.2640717, a: 1}
+  m_IndirectSpecularColor: {r: 0.17687257, g: 0.21449193, b: 0.26407126, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6142,7 +6142,7 @@ GameObject:
   - component: {fileID: 1513055212}
   - component: {fileID: 1513055211}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Objectives image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6166,7 +6166,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 285.6, y: 277.1}
+  m_AnchoredPosition: {x: 285.6, y: 238}
   m_SizeDelta: {x: 305.2943, y: 83.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1513055211
