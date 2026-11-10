@@ -7,6 +7,7 @@ public class RandomMovement : MonoBehaviour
 {
     public NavMeshAgent agent;
     public float range; //radius of sphere
+    //public Animator anim;
 
     //public Transform centrePoint; //centre of the area the agent wants to move around in
     //transform used instead
@@ -27,7 +28,6 @@ public class RandomMovement : MonoBehaviour
                 agent.SetDestination(point);
             }
         }
-
     }
     bool RandomPoint(Vector3 center, float range, out Vector3 result)
     {
