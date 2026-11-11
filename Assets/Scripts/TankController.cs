@@ -36,7 +36,7 @@ public class TankController : MonoBehaviour
         // setting default tank capacities 
         // capacity represents seconds of usage
         totalCapacity = 30;
-        currentCapacity = 30;
+        currentCapacity = totalCapacity;
 
         // initialise UI bar - empty at first
         oxygenScript.SetMaxHealth(totalCapacity);
