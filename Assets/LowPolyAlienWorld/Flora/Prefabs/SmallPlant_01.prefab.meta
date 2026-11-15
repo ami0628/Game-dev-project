@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 20f64b4081161ef43b320aa975519fdc
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 132329
+  packageName: Low poly alien world
+  packageVersion: 1.0
+  assetPath: Assets/LowPolyAlienWorld/Flora/Prefabs/SmallPlant_01.prefab
+  uploadId: 276345
