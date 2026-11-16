@@ -10,7 +10,14 @@ public class PlayerMovement : MonoBehaviour
     private CharacterController controller;
     public Transform playerCamera;
 
-    public float speed = 5.0f;
+    public float crouchHeight = 1.0f;
+    public float crouchSpeed = 10f;
+
+    private float standingHeight;
+    private float standingCenterY;
+    private float standingCameraY;
+
+    public float speed = 30f;
     private float horizontalInput;
     private float forwardInput;
 
@@ -23,20 +30,21 @@ public class PlayerMovement : MonoBehaviour
     public float strafeDecay = 5.0f;
     private float strafeTimer = 0f;
 
-    private Vector3 originalScale;
     private Vector3 playerVelocity;
 
     private float mouseXInput;
     private float mouseYInput;
-    private float cameraPitch = 0.0f;  
+    private float cameraPitch = 0.0f;
     public float mouseSensitivity = 10f;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        originalScale = transform.localScale;
         controller = GetComponent<CharacterController>();
+        standingHeight = controller.height;
+        standingCenterY = controller.center.y;
+        standingCameraY = playerCamera.localPosition.y;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
@@ -104,20 +112,34 @@ public class PlayerMovement : MonoBehaviour
         playerVelocity.z = Mathf.Lerp(playerVelocity.z, 0, strafeDecay * Time.deltaTime);
 
         //Crouch
-        if (Input.GetKeyDown(KeyCode.LeftControl))
-        {
-            transform.localScale = new Vector3(originalScale.x, (originalScale.y/2), originalScale.z);
-            transform.position -= transform.up * originalScale.y * 0.25f;
-        }
-        if (Input.GetKeyUp(KeyCode.LeftControl))
-        {
-            transform.localScale = new Vector3(originalScale.x, originalScale.y, originalScale.z);
-            transform.position += transform.up * originalScale.y * 0.25f;
-        }
+        bool crouching = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.LeftCommand) || !canStand();
+        float targetHeight = crouching ? crouchHeight : standingHeight;
+        controller.height = Mathf.Lerp(controller.height, targetHeight, crouchSpeed * Time.deltaTime);
+
+        float heightLost = standingHeight - controller.height;
+        controller.center = new Vector3(controller.center.x, (standingCenterY - heightLost / 2f), controller.center.z);
+        playerCamera.localPosition = new Vector3(playerCamera.localPosition.x, standingCameraY - heightLost, playerCamera.localPosition.z);
+
+
+
+
 
 
         controller.Move(totalMovement * Time.deltaTime);
 
     }
 
+    bool canStand()
+    {
+        float bottomY = standingCenterY - standingHeight / 2f;
+
+
+        // transform point converts local point into world position, and handles scale of player correctlys
+        Vector3 origin = transform.TransformPoint(new Vector3(controller.center.x, bottomY + crouchHeight, controller.center.z));
+
+        // distance of headroom needed, multiplied by scale of player
+        float distance = (standingHeight - crouchHeight) * transform.lossyScale.y;
+
+        return !Physics.Raycast(origin, Vector3.up, distance);
+    }
 }
