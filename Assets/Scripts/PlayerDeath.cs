@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
+using System.Threading;
 
 // add script to Player GameObject
 // detects if user is on the ship - to carry out expected oxygen behaviour
@@ -12,6 +14,10 @@ public class PlayerO2 : MonoBehaviour
     public bool onShip;
     public bool oxygenEquipped;
     public bool wasKilled; // set by playerHealth script
+
+    public Image suffocateVignette;
+    private float oxygenDeathTimer = 0f;
+    private float oxygenTimerMax = 8f;
 
     public GameObject O2Tank; // current tank equipped (initially null)
     public GameObject Spawnpoint;
@@ -36,11 +42,16 @@ public class PlayerO2 : MonoBehaviour
         // player killed if outside without an O2 tank
         if (!onShip && !oxygenEquipped)
         {
-            StartCoroutine(Dead("You ran out of oxygen"));
+            if (oxygenDeathTimer >= oxygenTimerMax) { StartCoroutine(Dead("You ran out of oxygen")); }
+            else { oxygenDeathTimer += Time.deltaTime; }
+           
         }
+        else { oxygenDeathTimer = 0f; }
+
+        updateVignetteAlpha();
 
         // player killed by creature
-        if (wasKilled) 
+        if (wasKilled)
         {
             wasKilled = false;
             StartCoroutine(Dead("You were killed"));
@@ -97,4 +108,13 @@ public class PlayerO2 : MonoBehaviour
         yield return new WaitForSeconds(5);
         O2hint.enabled = false;
     }
+
+    void updateVignetteAlpha()
+    {
+        Color vignetteColour = suffocateVignette.color;
+        if (oxygenDeathTimer <= 0f) { vignetteColour.a = 0f; }
+        else { vignetteColour.a = Mathf.Clamp01(oxygenDeathTimer / Mathf.Clamp(oxygenTimerMax,0f, oxygenTimerMax-3f)); }
+        suffocateVignette.color = vignetteColour;
+    }
+
 }
