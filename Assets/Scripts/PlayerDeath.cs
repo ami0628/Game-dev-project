@@ -14,7 +14,6 @@ public class PlayerDeath : MonoBehaviour
     public bool wasKilled; // set by playerHealth script
 
     public string currentScene;
-    public GameObject Spawnpoint;
 
     // text components
     public TextMeshProUGUI deathMessage;
@@ -33,6 +32,8 @@ public class PlayerDeath : MonoBehaviour
 
     void Update()
     {
+        currentScene = SceneManager.GetActiveScene().name;
+
         // player killed if outside without an O2 tank
         if (currentScene == "OutsideEnv" && !hasOxygen)
         {
