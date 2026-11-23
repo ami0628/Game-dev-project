@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 // add script to Player GameObject
 // detects if user is on the ship - to carry out expected oxygen behaviour
@@ -9,10 +10,10 @@ using TMPro;
 public class PlayerO2 : MonoBehaviour
 {
     // flags
-    public bool onShip;
     public bool oxygenEquipped;
     public bool wasKilled; // set by playerHealth script
 
+    public string currentScene;
     public GameObject O2Tank; // current tank equipped (initially null)
     public GameObject Spawnpoint;
 
@@ -24,7 +25,7 @@ public class PlayerO2 : MonoBehaviour
     void Start()
     {
         // initialise default
-        onShip = true;
+        currentScene = SceneManager.GetActiveScene().name;
         oxygenEquipped = false;
 
         StartCoroutine(StartMessage());
@@ -34,7 +35,7 @@ public class PlayerO2 : MonoBehaviour
     void Update()
     {
         // player killed if outside without an O2 tank
-        if (!onShip && !oxygenEquipped)
+        if (currentScene == "OutsideEnv" && !oxygenEquipped)
         {
             StartCoroutine(Dead("You ran out of oxygen"));
         }
@@ -47,42 +48,22 @@ public class PlayerO2 : MonoBehaviour
         }
     }
 
-    // set current location
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "Ship") 
-        {
-            onShip = true; 
-        }
-
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.tag == "Ship") 
-        {
-
-            onShip = false;
-        }
-
-    }
-
     // player death and respawn
     IEnumerator Dead(string message) 
     {
         // grab component to temporarily disable to allow teleportation
         CharacterController cc = GetComponent<CharacterController>();
 
-        cc.enabled = false; 
-        transform.position = Spawnpoint.transform.position; // teleport to spawn
-        cc.enabled = true; // re-enable for correct movement 
+        cc.enabled = false;
+        SceneManager.LoadScene(2); // teleport to spawn
 
         // display death message
         deathMessage.text = message;
         yield return new WaitForSeconds(5);
         deathMessage.text = "";
+        cc.enabled = true; // re-enable for correct movement
 
-        
+
     }
 
     // display starter texts for 5 seconds each 

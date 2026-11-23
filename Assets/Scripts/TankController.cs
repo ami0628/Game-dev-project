@@ -48,7 +48,7 @@ public class TankController : MonoBehaviour
 
     void Update()
     {
-        if (onPlayer && !playerScript.onShip) 
+        if (onPlayer && playerScript.currentScene == "OutsideEnv") 
         {
             // destroy tank if oxygen runs out
             // sets equipped to false so method to kill + respawn the player is run in playerScript
