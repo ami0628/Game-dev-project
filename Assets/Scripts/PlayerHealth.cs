@@ -8,14 +8,14 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private float maxHealth = 100f;
     [SerializeField] private HealthBar healthBar;
 
-    private PlayerO2 playerScript;
+    private PlayerDeath playerScript;
 
     public float health { get; private set; }
     public float MaxHealth => maxHealth;
 
     private void Start()
     {
-        playerScript = GetComponent<PlayerO2>();
+        playerScript = GetComponent<PlayerDeath>();
         health = maxHealth;
 
         if (healthBar == null)

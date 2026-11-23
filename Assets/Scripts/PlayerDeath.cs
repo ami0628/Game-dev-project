@@ -7,14 +7,13 @@ using UnityEngine.SceneManagement;
 // add script to Player GameObject
 // detects if user is on the ship - to carry out expected oxygen behaviour
 // runs death method (once death conditions fulfilled) 
-public class PlayerO2 : MonoBehaviour
+public class PlayerDeath : MonoBehaviour
 {
     // flags
-    public bool oxygenEquipped;
+    public bool hasOxygen;
     public bool wasKilled; // set by playerHealth script
 
     public string currentScene;
-    public GameObject O2Tank; // current tank equipped (initially null)
     public GameObject Spawnpoint;
 
     // text components
@@ -26,7 +25,7 @@ public class PlayerO2 : MonoBehaviour
     {
         // initialise default
         currentScene = SceneManager.GetActiveScene().name;
-        oxygenEquipped = false;
+        hasOxygen = true;
 
         StartCoroutine(StartMessage());
 
@@ -35,7 +34,7 @@ public class PlayerO2 : MonoBehaviour
     void Update()
     {
         // player killed if outside without an O2 tank
-        if (currentScene == "OutsideEnv" && !oxygenEquipped)
+        if (currentScene == "OutsideEnv" && !hasOxygen)
         {
             StartCoroutine(Dead("You ran out of oxygen"));
         }
