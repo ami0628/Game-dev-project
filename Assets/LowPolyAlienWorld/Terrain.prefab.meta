@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: f9b070a0df4bf2941a858f1c29591401
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 132329
+  packageName: Low poly alien world
+  packageVersion: 1.0
+  assetPath: Assets/LowPolyAlienWorld/Terrain.prefab
+  uploadId: 276345

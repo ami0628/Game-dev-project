@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 46aa8b6d013691a43a624b2200d4519a
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 132329
+  packageName: Low poly alien world
+  packageVersion: 1.0
+  assetPath: Assets/LowPolyAlienWorld/Rocks/Prefabs/SmallRock_01.prefab
+  uploadId: 276345
