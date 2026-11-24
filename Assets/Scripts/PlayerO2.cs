@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// added to O2 Tank prefab
+// added to player GameObject
 public class PlayerO2 : MonoBehaviour
 {
     // components to control O2 UI

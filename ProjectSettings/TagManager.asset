@@ -12,6 +12,7 @@ TagManager:
   - Resource
   - Oxygen Bar
   - Enemy
+  - O2 Parent
   layers:
   - Default
   - TransparentFX

@@ -146,7 +146,6 @@ GameObject:
   - component: {fileID: 5614440416934381669}
   - component: {fileID: 6403765117970019223}
   - component: {fileID: 2857850128504963196}
-  - component: {fileID: 5717283968815899212}
   m_Layer: 0
   m_Name: O2 Tank
   m_TagString: O2
@@ -164,7 +163,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 5, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8451869737673656628}
@@ -243,22 +242,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
---- !u!114 &5717283968815899212
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4145661834193311425}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 337a89abc2e896a449977c9c52eaedc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentCapacity: 0
-  totalCapacity: 0
-  player: {fileID: 0}
-  oxygenText: {fileID: 7150560761389288543}
 --- !u!1 &4838462650460035691
 GameObject:
   m_ObjectHideFlags: 0

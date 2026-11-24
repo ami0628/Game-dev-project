@@ -19,11 +19,15 @@ public class PlayerDeath : MonoBehaviour
     public TextMeshProUGUI deathMessage;
     public TextMeshProUGUI O2hint;
 
+    public GameObject teleporter;
+    private SceneController sceneScript;
+
     void Start()
     {
         // initialise default
         currentScene = SceneManager.GetActiveScene().name;
         hasOxygen = true;
+        sceneScript = teleporter.GetComponent<SceneController>();
 
         StartCoroutine(StartMessage());
 
@@ -55,7 +59,7 @@ public class PlayerDeath : MonoBehaviour
         cc.enabled = false;
 
         // change scene + teleport player
-        SceneManager.LoadScene(2);
+        sceneScript.LoadShip();
         transform.position = new Vector3(0, 5, -20);
         cc.enabled = true; // re-enable for correct movement
 
