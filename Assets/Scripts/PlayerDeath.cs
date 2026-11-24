@@ -19,10 +19,6 @@ public class PlayerDeath : MonoBehaviour
     private float oxygenDeathTimer = 0f;
     private float oxygenTimerMax = 8f;
 
-    public Image suffocateVignette;
-    private float oxygenDeathTimer = 0f;
-    private float oxygenTimerMax = 8f;
-
     public string currentScene;
 
     // text components
