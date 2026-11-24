@@ -21,6 +21,9 @@ public class PlayerO2 : MonoBehaviour
     // timer to accurately decrement oxygen each second
     private float timer;
 
+    private GameObject tank;
+    private bool playerNearby;
+    public TextMeshProUGUI pickupText;
 
     void Start()
     {
@@ -37,6 +40,8 @@ public class PlayerO2 : MonoBehaviour
 
         // initialise UI bar - starts full
         oxygenScript.SetMaxHealth(totalCapacity);
+
+        playerNearby = false;
 
 
     }
@@ -65,6 +70,11 @@ public class PlayerO2 : MonoBehaviour
             }
 
         }
+
+        if (playerNearby && Input.GetKeyDown(KeyCode.E)) 
+        {
+            Pickup();
+        }
     }
 
     // refill oxygen when player picks up an O2 tank
@@ -72,14 +82,35 @@ public class PlayerO2 : MonoBehaviour
     { 
         if (other.CompareTag("O2")) 
         {
-            Destroy(other.gameObject);
-            playerScript.hasOxygen = true;
-            currentCapacity = totalCapacity;
-            oxygenScript.SetMaxHealth(totalCapacity);
+            tank = other.gameObject;
+            playerNearby = true;
+            pickupText.text = "Press E to pick up";
+
         }
        
-            
+    }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("O2"))
+        {
+            tank = null;
+            playerNearby = false;
+            pickupText.text = "";
+
+        }
+    }
+
+    private void Pickup() 
+    {
+        if (tank != null) 
+        {
+            Destroy(tank);
+        }
+        pickupText.text = "";
+        playerScript.hasOxygen = true;
+        currentCapacity = totalCapacity;
+        oxygenScript.SetMaxHealth(totalCapacity);
     }
 
 }
