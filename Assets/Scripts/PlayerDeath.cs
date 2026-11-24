@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
+using System.Threading;
 using UnityEngine.SceneManagement;
 
 // add script to Player GameObject
@@ -12,6 +14,14 @@ public class PlayerDeath : MonoBehaviour
     // flags
     public bool hasOxygen;
     public bool wasKilled; // set by playerHealth script
+
+    public Image suffocateVignette;
+    private float oxygenDeathTimer = 0f;
+    private float oxygenTimerMax = 8f;
+
+    public Image suffocateVignette;
+    private float oxygenDeathTimer = 0f;
+    private float oxygenTimerMax = 8f;
 
     public string currentScene;
 
@@ -40,11 +50,16 @@ public class PlayerDeath : MonoBehaviour
         // player killed if outside if oxygen is empty
         if (currentScene == "OutsideEnv" && !hasOxygen)
         {
-            StartCoroutine(Dead("You ran out of oxygen"));
+            if (oxygenDeathTimer >= oxygenTimerMax) { StartCoroutine(Dead("You ran out of oxygen")); }
+            else { oxygenDeathTimer += Time.deltaTime; }
+           
         }
+        else { oxygenDeathTimer = 0f; }
+
+        updateVignetteAlpha();
 
         // player killed by creature
-        if (wasKilled) 
+        if (wasKilled)
         {
             wasKilled = false;
             StartCoroutine(Dead("You were killed"));
@@ -79,4 +94,13 @@ public class PlayerDeath : MonoBehaviour
         yield return new WaitForSeconds(5);
         O2hint.enabled = false;
     }
+
+    void updateVignetteAlpha()
+    {
+        Color vignetteColour = suffocateVignette.color;
+        if (oxygenDeathTimer <= 0f) { vignetteColour.a = 0f; }
+        else { vignetteColour.a = Mathf.Clamp01(oxygenDeathTimer / Mathf.Clamp(oxygenTimerMax,0f, oxygenTimerMax-3f)); }
+        suffocateVignette.color = vignetteColour;
+    }
+
 }
