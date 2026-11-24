@@ -17,7 +17,6 @@ public class PlayerDeath : MonoBehaviour
 
     // text components
     public TextMeshProUGUI deathMessage;
-    public TextMeshProUGUI O2StarterMessage;
     public TextMeshProUGUI O2hint;
 
     void Start()
@@ -34,7 +33,7 @@ public class PlayerDeath : MonoBehaviour
     {
         currentScene = SceneManager.GetActiveScene().name;
 
-        // player killed if outside without an O2 tank
+        // player killed if outside if oxygen is empty
         if (currentScene == "OutsideEnv" && !hasOxygen)
         {
             StartCoroutine(Dead("You ran out of oxygen"));
@@ -51,28 +50,26 @@ public class PlayerDeath : MonoBehaviour
     // player death and respawn
     IEnumerator Dead(string message) 
     {
-        // grab component to temporarily disable to allow teleportation
+        // temporarily disable character controller to allow teleportation
         CharacterController cc = GetComponent<CharacterController>();
-
         cc.enabled = false;
-        SceneManager.LoadScene(2); // teleport to spawn
+
+        // change scene + teleport player
+        SceneManager.LoadScene(2);
+        transform.position = new Vector3(0, 5, -20);
+        cc.enabled = true; // re-enable for correct movement
 
         // display death message
         deathMessage.text = message;
         yield return new WaitForSeconds(5);
         deathMessage.text = "";
-        cc.enabled = true; // re-enable for correct movement
 
 
     }
 
-    // display starter texts for 5 seconds each 
+    // display starter texts for 5 seconds
     IEnumerator StartMessage() 
     {
-
-        O2StarterMessage.enabled = true;
-        yield return new WaitForSeconds(5);
-        O2StarterMessage.enabled = false;
 
         O2hint.enabled = true;
         yield return new WaitForSeconds(5);

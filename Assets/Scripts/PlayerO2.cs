@@ -10,12 +10,11 @@ public class PlayerO2 : MonoBehaviour
     private GameObject oxygenBar;
     private HealthBar oxygenScript;
 
-    // capacities of O2 tanks
+    // capacities of O2 
     public float currentCapacity;
     public float totalCapacity;
 
-    // player object references
-    public GameObject player;
+    // script reference
     private PlayerDeath playerScript;
 
     // timer to accurately decrement oxygen each second
@@ -30,7 +29,7 @@ public class PlayerO2 : MonoBehaviour
         oxygenScript = oxygenBar.GetComponent<HealthBar>();
 
 
-        // setting default tank capacities 
+        // setting default oxygen capacity
         // capacity represents seconds of usage
         totalCapacity = currentCapacity = timer = 30;
         currentCapacity = totalCapacity;
@@ -45,8 +44,7 @@ public class PlayerO2 : MonoBehaviour
     {
         if (playerScript.currentScene == "OutsideEnv") 
         {
-            // destroy tank if oxygen runs out
-            // sets equipped to false so method to kill + respawn the player is run in playerScript
+            // sets O2 flag to false so playerScript runs method to respawn player
             if (currentCapacity == 0)
             {
         
@@ -66,7 +64,7 @@ public class PlayerO2 : MonoBehaviour
         }
     }
 
-    // method called when player picks up an O2 tank
+    // refill oxygen when player picks up an O2 tank
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "O2") 

@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 public class SceneController : MonoBehaviour
 {
     string currentScene;
+    public GameObject spawnpoint;
+    private Transform player;
     public void Start()
     {
         currentScene = SceneManager.GetActiveScene().name;
@@ -19,7 +22,9 @@ public class SceneController : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            if(currentScene == "ShipEnv")
+
+
+            if (currentScene == "ShipEnv")
             {
                 SceneManager.LoadScene(3);
             }
@@ -27,6 +32,15 @@ public class SceneController : MonoBehaviour
             {
                 SceneManager.LoadScene(2);
             }
+
+            // grab component to temporarily disable to allow teleportation
+            CharacterController cc = other.GetComponent<CharacterController>();
+            cc.enabled = false;
+
+            player = other.transform;
+            player.position = spawnpoint.transform.position;
+
+            cc.enabled = true; // re-enable for correct movement 
         }
     }
 
