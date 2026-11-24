@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// used to keep certain GameObjects between scenes
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
@@ -22,6 +23,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // setting persistent objects in array
     private void PersistentObjects() 
     {
         foreach (GameObject obj in persistentObjects) 
@@ -33,6 +35,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // destroy any duplicates
     private void CleanUpAndDestroy() 
     {
         foreach (GameObject obj in persistentObjects) 

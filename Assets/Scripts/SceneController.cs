@@ -45,21 +45,25 @@ public class SceneController : MonoBehaviour
 
         }
     }
-
+    
+    // change scene to outside environment
     public void LoadOutside()
     {
         SceneManager.LoadScene(3);
         HideO2Tanks(false);
     }
 
+    // change scene to ship environemnt
     public void LoadShip()
     {
         SceneManager.LoadScene(2);
         HideO2Tanks(true);
     }
 
+    // hide/unhide O2 tanks in scene
     private void HideO2Tanks(bool setTo) 
     {
+        // deactivate child objects to parent is always active and can be found
         tanks = GameObject.FindGameObjectWithTag("O2 Parent");
         foreach (Transform child in tanks.transform) 
         {
