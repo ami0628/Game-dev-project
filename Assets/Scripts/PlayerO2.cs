@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 // added to player GameObject
 public class PlayerO2 : MonoBehaviour
@@ -42,15 +43,17 @@ public class PlayerO2 : MonoBehaviour
 
     void Update()
     {
-        if (playerScript.currentScene == "OutsideEnv") 
+
+        if (playerScript.currentScene == "OutsideEnv")
         {
             // sets O2 flag to false so playerScript runs method to respawn player
             if (currentCapacity == 0)
             {
-        
+
                 playerScript.hasOxygen = false;
 
             }
+
 
             // decrease oxygen level every second
             timer += Time.deltaTime;
@@ -66,17 +69,16 @@ public class PlayerO2 : MonoBehaviour
 
     // refill oxygen when player picks up an O2 tank
     private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "O2") 
+    { 
+        if (other.CompareTag("O2")) 
         {
-            
             Destroy(other.gameObject);
-
             playerScript.hasOxygen = true;
             currentCapacity = totalCapacity;
             oxygenScript.SetMaxHealth(totalCapacity);
-
         }
+       
+            
 
     }
 
